@@ -1,105 +1,80 @@
 # 🏥 Hospital Management System (HMS)
 
-The Hospital Management System (HMS) is a C++-based software application developed as part of the Summer Software Internship Program at FuzeTek Company.
-
-Its primary goal is to provide an efficient, modular solution for managing core hospital operations, including patient lifecycle management, doctor assignment, appointment scheduling, medical record handling, and emergency case processing. The project is guided by a formally defined Software Requirements Specification (SRS) and is implemented following object-oriented programming principles and the use of standard data structures (stacks, queues, vectors).
-
+A C++-based hospital management prototype developed during the FuzeTek Summer Internship.  The system manages patients, doctors, appointments, medical records, and emergencies using Object-Oriented Programming (OOP) and fundamental data structures.  
+It is built according to the Software Requirements Specification (SRS) and follows the full software lifecycle from design to testing.
 
 ---
 
-# 📌 Project Scope
+# 🚀 Features
 
-The HMS project is structured into progressive stages to simulate a real-world software development cycle:
+**Patient Management**
 
-1. Requirements & Design
+- Register, admit, and discharge patients.
+- Store and display medical history.
+- Request and perform medical tests.
 
-Analysis of the problem domain using the SRS.
+**Doctor Management**
 
-Identification of system actors, use cases, and functional/non-functional requirements.
+- Add doctors with department specialization.
+- Manage doctor queues and appointments.
+- Track doctor details and assigned patients.
 
-High-level design of classes (Patient, Doctor, Hospital) and their interactions.
+**Appointments & Scheduling**
 
+- Book appointments between patients and doctors.
+- Handle appointment queues in order.
 
+**Emergency Handling**
 
-2. Implementation
+- Add emergency cases to a priority queue.
+- Process and handle urgent admissions.
 
-Development of core functionality in C++ using clean, modular code.
+**Hospital Administration**
 
-Patient operations: registration, admission, discharge, and medical history.
-
-Doctor operations: specialization assignment, appointment queue management.
-
-Hospital operations: emergency handling, patient/doctor info display, system records.
-
-
-
-3. Testing & Validation
-
-Unit testing for all implemented functions.
-
-Integration testing across modules (patients ↔ doctors ↔ hospital).
-
-Verification against SRS-defined requirements.
-
-
-
-4. Optimization & Deployment
-
-Performance tuning (queue/stack efficiency, memory handling).
-
-Security and maintainability enhancements.
-
-Preparation for user acceptance testing (UAT).
-
-
-
-
+- View patient information and medical records.
+- Display doctor details and schedules.
 
 ---
 
-# 🚀 Key Features
+# 📂 System Architecture
 
-Patient Management → Register, admit, discharge, and maintain medical history.
+The HMS follows an Object-Oriented Design with the following classes:
 
-Doctor Management → Manage doctor profiles, departments, and patient queues.
-
-Appointments & Tests → Schedule doctor visits and manage patient tests.
-
-Emergency Handling → Prioritize and manage critical cases via queues.
-
-Hospital Administration → Centralized control of patients, doctors, and operations.
-
-
+| Class Name | Responsibility |
+|------------|----------------|
+| Patient    | Manages patient lifecycle, history, and tests. |
+| Doctor     | Handles doctor details, department, and appointments. |
+| Hospital   | Central controller for patients, doctors, and emergencies. |
+| Enums      | Defines categories like RoomType and Department. |
 
 ---
 
-# 🛠️ Tech Stack
+# 📌 Functional Requirements Summary
 
-Language: C++
-
-Paradigm: Object-Oriented Programming (OOP)
-
-Data Structures: Stack (medical history), Queue (appointments, emergencies), Vector (records)
-
-Version Control: Git/GitHub
-
-Collaboration Tools: Jira (Agile task management)
-
-
+| ID     | Feature             | Description |
+|--------|-------------------|-------------|
+| FR1.1  | Register Patient    | Add a new patient with basic details. |
+| FR1.2  | Admit Patient       | Assign room type and mark as admitted. |
+| FR1.3  | Discharge Patient   | Update status and log discharge. |
+| FR1.4  | Medical Records     | Add and view patient history. |
+| FR1.5  | Request/Perform Test | Queue and complete diagnostic tests. |
+| FR2.1  | Add Doctor          | Register doctor with department. |
+| FR2.2  | Book Appointment    | Assign patient to doctor’s queue. |
+| FR2.3  | Doctor Sees Patient | Pop next patient from queue. |
+| FR3.1  | Add Emergency       | Add patient to emergency queue. |
+| FR3.2  | Handle Emergency    | Process emergency admissions. |
+| FR4.1  | Display Patient Info | View patient details and history. |
+| FR4.2  | Display Doctor Info  | Show doctor profile and appointments. |
 
 ---
 
 # 🎯 Internship Context
 
-This project is part of the FuzeTek Summer Internship Program, designed to give interns hands-on experience with:
+This project is designed to give interns hands-on experience in:
 
-Real-world software engineering workflows.
+- Agile software development with Jira.
+- Modular OOP design and data structures in C++.
+- Verification and validation of SRS requirements.
+- Team collaboration using GitHub and version control best practices.
 
-Agile development and task distribution.
-
-Modular design and code maintainability.
-
-Testing-driven development.
-
-
-The HMS prototype serves as both a practical training project and a scalable foundation for more advanced healthcare management systems.
+---
