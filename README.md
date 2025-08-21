@@ -1,7 +1,6 @@
 # 🏥 Hospital Management System (HMS)
 
-A C++-based hospital management prototype developed during the FuzeTek Summer Internship.  The system manages patients, doctors, appointments, medical records, and emergencies using Object-Oriented Programming (OOP) and fundamental data structures.  
-It is built according to the Software Requirements Specification (SRS) and follows the full software lifecycle from design to testing.
+A C++-based hospital management prototype developed during the FuzeTek Summer Internship.  The system manages patients, doctors, appointments, medical records, and emergencies using Object-Oriented Programming (OOP) and fundamental data structures. It is built according to the Software Requirements Specification (SRS) and follows the full software lifecycle from design to testing.
 
 ---
 
