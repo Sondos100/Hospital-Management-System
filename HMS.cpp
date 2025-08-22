@@ -6,7 +6,8 @@
 using namespace std;
 
 // ========== ENUMERATIONS ========== //
-enum Department {
+enum Department
+{
     CARDIOLOGY,
     NEUROLOGY,
     ORTHOPEDICS,
@@ -15,7 +16,8 @@ enum Department {
     GENERAL
 };
 
-enum RoomType {
+enum RoomType
+{
     GENERAL_WARD,
     ICU,
     PRIVATE_ROOM,
@@ -23,7 +25,8 @@ enum RoomType {
 };
 
 // ========== PATIENT CLASS ========== //
-class Patient {
+class Patient
+{
 private:
     int id;
     string name;
@@ -50,7 +53,8 @@ public:
 };
 
 // ========== DOCTOR CLASS ========== //
-class Doctor {
+class Doctor
+{
 private:
     int id;
     string name;
@@ -69,7 +73,8 @@ public:
 };
 
 // ========== HOSPITAL CLASS ========== //
-class Hospital {
+class Hospital
+{
 private:
     vector<Patient> patients;
     vector<Doctor> doctors;
@@ -78,15 +83,58 @@ private:
     int doctorCounter;
 
 public:
-    Hospital();
 
-    int registerPatient(string name, int age, string contact);
-    int addDoctor(string name, Department dept);
-    void admitPatient(int patientId, RoomType type);
-    void addEmergency(int patientId){
-      emergencyQueue.push(patientId);
-    };
-    int handleEmergency(){
+    Hospital()
+    {
+        patientCounter = 0;
+        doctorCounter = 0;
+    }
+
+    int registerPatient(string name, int age, string contact)
+    {
+        patientCounter++;
+        Patient newPatient(patientCounter, name, age, contact);
+        patients.push_back(newPatient);
+        return patientCounter;
+    }
+
+    int addDoctor(string name, Department dept)
+    {
+        doctorCounter++;
+        Doctor newDoctor(doctorCounter, name, dept);
+        doctors.push_back(newDoctor);
+        return doctorCounter;
+    }
+
+    void admitPatient(int patientId, RoomType type)
+    {
+        bool found = false;
+        for (auto &patient : patients)
+        {
+            if (patient.getId() == patientId)
+            {
+                found = true;
+                if (patient.getAdmissionStatus())
+                {
+                    cout << "patient" << patient.getName();
+                    cout << "Patient is already admitted !" << endl;
+                }
+                else
+                {
+                    patient.admitPatient(type);
+                    cout << "patient :" << patient.getName();
+                    cout << "Patient is admitted successfully to room type " << type << endl;
+                }
+                break;
+            }
+        }
+        if (!found)
+        {
+            cout << "Patient with ID: " << patientId << "is not found" << endl;
+        }
+    }
+
+int handleEmergency(){
     if(emergencyQueue.empty()){
         return -1;
     }
@@ -148,7 +196,8 @@ public:
 };
 
 // ========== MAIN PROGRAM ========== //
-int main() {
+int main()
+{
     Hospital hospital;
 
     // Test Case 1: Registering patients
