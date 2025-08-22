@@ -73,9 +73,29 @@ public:
         }
     }
 
-    void addMedicalRecord(string record);
-    void requestTest(string testName);
-    string performTest();
+    void addMedicalRecord(string record)
+    {
+        medicalHistory.push(record);
+    };
+
+    void requestTest(string testName)
+    {
+        testQueue.push(testName);
+        medicalHistory.push("Requested test: " + testName);
+    };
+    string performTest()
+    {
+        if (testQueue.empty())
+        {
+            return "No tests are pending";
+        }
+
+        string testName = testQueue.front();
+        testQueue.pop();
+        medicalHistory.push("Performed test: " + testName);
+
+        return testName;
+    };
 
     void displayHistory()
     {
@@ -102,14 +122,21 @@ public:
         }
     }
 
-    int getId();
+    int getId()
+    {
+        return id;
+    };
 
     string getName()
     {
         return name;
     }
 
-    bool getAdmissionStatus();
+    bool getAdmissionStatus()
+    {
+
+        return isAdmitted;
+    };
 };
 
 // ========== DOCTOR CLASS ========== //
@@ -276,6 +303,16 @@ public:
 // ========== MAIN PROGRAM ========== //
 int main()
 {
+
+    /// Testing Patient Class
+    Patient p1(1, "John Doe", 30, "555-1234");
+    cout << "Patient created: " << p1.getName() << endl;
+    p1.admitPatient(PRIVATE_ROOM); // if you want to see the patient is not admitted comment this line and run again
+    p1.dischargePatient();
+    p1.displayHistory();
+    cout << "Patient name is: " << p1.getName() << endl;
+    // end of my testing part
+
     Hospital hospital;
 
     // Test Case 1: Registering patients
