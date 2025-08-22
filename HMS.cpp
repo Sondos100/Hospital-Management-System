@@ -133,6 +133,12 @@ public:
             cout << "Patient with ID: " << patientId << "is not found" << endl;
         }
     }
+    void addEmergency(int patientId){
+
+    emergencyQueue.push(patientId);
+
+     };
+
 
 int handleEmergency(){
     if(emergencyQueue.empty()){
