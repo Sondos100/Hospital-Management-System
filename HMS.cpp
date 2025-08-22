@@ -133,11 +133,84 @@ public:
         }
     }
 
-    void addEmergency(int patientId);
-    int handleEmergency();
-    void bookAppointment(int doctorId, int patientId);
+    void addEmergency(int patientId)
+    {
+        emergencyQueue.push(patientId);
+    }
+
+    int handleEmergency()
+    {
+        if (emergencyQueue.empty())
+        {
+            return -1;
+        }
+
+        int patientId = emergencyQueue.front();
+        emergencyQueue.pop();
+        return patientId;
+    }
+
+    void bookAppointment(int doctorId, int patientId)
+    {
+        bool foundDoc = false;
+        bool foundPat = false;
+
+        for (Doctor &d : doctors)
+        {
+            if (doctorId == d.getId())
+            {
+                d.addAppointment(patientId);
+                foundDoc = true;
+            }
+        }
+
+        if (foundDoc)
+        {
+            for (Patient &p : patients)
+            {
+                if (patientId == p.getId())
+                {
+                    p.addMedicalRecord("Appointment booked with Doctor ID " + to_string(doctorId));
+                    foundPat = true;
+                }
+            }
+            if (foundPat)
+            {
+                cout << "Booking confirmed." << endl;
+            }
+            else
+            {
+                cout << "Booking cancelled , Wrong doctor ID." << endl;
+            }
+        }
+
+        else
+        {
+            cout << "Booking cancelled , Wrong doctor ID." << endl;
+        }
+    }
+
     void displayPatientInfo(int patientId);
-    void displayDoctorInfo(int doctorId);
+
+    void displayDoctorInfo(int doctorId)
+    {
+        bool foundDoc = false;
+        for (Doctor &d : doctors)
+        {
+            if (doctorId == d.getId())
+            {
+                cout << "Doctor ID : " << d.getId() << endl;
+                cout << "Doctor Name :" << d.getName() << endl;
+                cout << "Doctor Department : " << d.getDepartment() << endl;
+                // be careful getdepartment method it returns string and department is enum.
+                foundDoc = true;
+            }
+        }
+        if (!foundDoc)
+        {
+            cout << "Wrong doctor ID.";
+        }
+    }
 };
 
 // ========== MAIN PROGRAM ========== //
