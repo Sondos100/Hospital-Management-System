@@ -38,17 +38,77 @@ private:
     RoomType roomType;
 
 public:
-    Patient(int pid, string n, int a, string c);
+    Patient(int pid, string n, int a, string c)
+    {
+        // Supposed Entered Data Are Valid
+        id = pid;
+        name = n;
+        age = a;
+        contact = c;
+        isAdmitted = false;
+    }
 
-    void admitPatient(RoomType type);
-    void dischargePatient();
+    void admitPatient(RoomType type)
+    {
+        isAdmitted = true;
+        roomType = type;
+        medicalHistory.push("Admitted to room type " + to_string(type)); // can add "on " + current date
+        // may use addMedicalRecord method instead
+        cout << "Patient is admitted successfully !" << endl;
+    }
+
+    void dischargePatient()
+    {
+        // I will check this if-condition
+        if (isAdmitted)
+        {
+            isAdmitted = false;
+            medicalHistory.push("Discharged from hospital"); // can add "on " + current date
+            // may use addMedicalRecord method instead
+            cout << "Patient is discharged successfully !" << endl;
+        }
+        else
+        {
+            cout << "Patient is not admitted !" << endl;
+        }
+    }
+
     void addMedicalRecord(string record);
     void requestTest(string testName);
     string performTest();
-    void displayHistory();
+
+    void displayHistory()
+    {
+        stack<string> tempHistory = medicalHistory;
+
+        if (tempHistory.empty())
+        {
+            cout << "No medical history available." << endl;
+            return;
+        }
+
+        else
+        {
+            // Displaying history in reverse order (most recent first/LIFO)
+            cout << "====== Patient's Medical History ======" << endl;
+            cout << "Patient Name: " << name << endl;
+            cout << "Patient ID: " << id << endl;
+            cout << "---------------------------------------" << endl;
+            while (!tempHistory.empty())
+            {
+                cout << tempHistory.top() << endl;
+                tempHistory.pop();
+            }
+        }
+    }
 
     int getId();
-    string getName();
+
+    string getName()
+    {
+        return name;
+    }
+
     bool getAdmissionStatus();
 };
 
