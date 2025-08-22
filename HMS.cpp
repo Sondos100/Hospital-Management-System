@@ -38,18 +38,105 @@ private:
     RoomType roomType;
 
 public:
-    Patient(int pid, string n, int a, string c);
+    Patient(int pid, string n, int a, string c)
+    {
+        // Supposed Entered Data Are Valid
+        id = pid;
+        name = n;
+        age = a;
+        contact = c;
+        isAdmitted = false;
+    }
 
-    void admitPatient(RoomType type);
-    void dischargePatient();
-    void addMedicalRecord(string record);
-    void requestTest(string testName);
-    string performTest();
-    void displayHistory();
+    void admitPatient(RoomType type)
+    {
+        isAdmitted = true;
+        roomType = type;
+        medicalHistory.push("Admitted to room type " + to_string(type)); // can add "on " + current date
+        // may use addMedicalRecord method instead
+        cout << "Patient is admitted successfully !" << endl;
+    }
 
-    int getId();
-    string getName();
-    bool getAdmissionStatus();
+    void dischargePatient()
+    {
+        // I will check this if-condition
+        if (isAdmitted)
+        {
+            isAdmitted = false;
+            medicalHistory.push("Discharged from hospital"); // can add "on " + current date
+            // may use addMedicalRecord method instead
+            cout << "Patient is discharged successfully !" << endl;
+        }
+        else
+        {
+            cout << "Patient is not admitted !" << endl;
+        }
+    }
+
+    void addMedicalRecord(string record)
+    {
+        medicalHistory.push(record);
+    };
+
+    void requestTest(string testName)
+    {
+        testQueue.push(testName);
+        medicalHistory.push("Requested test: " + testName);
+    };
+    string performTest()
+    {
+        if (testQueue.empty())
+        {
+            return "No tests are pending";
+        }
+
+        string testName = testQueue.front();
+        testQueue.pop();
+        medicalHistory.push("Performed test: " + testName);
+
+        return testName;
+    };
+
+    void displayHistory()
+    {
+        stack<string> tempHistory = medicalHistory;
+
+        if (tempHistory.empty())
+        {
+            cout << "No medical history available." << endl;
+            return;
+        }
+
+        else
+        {
+            // Displaying history in reverse order (most recent first/LIFO)
+            cout << "====== Patient's Medical History ======" << endl;
+            cout << "Patient Name: " << name << endl;
+            cout << "Patient ID: " << id << endl;
+            cout << "---------------------------------------" << endl;
+            while (!tempHistory.empty())
+            {
+                cout << tempHistory.top() << endl;
+                tempHistory.pop();
+            }
+        }
+    }
+
+    int getId()
+    {
+        return id;
+    };
+
+    string getName()
+    {
+        return name;
+    }
+
+    bool getAdmissionStatus()
+    {
+
+        return isAdmitted;
+    };
 };
 
 // ========== DOCTOR CLASS ========== //
@@ -134,7 +221,6 @@ public:
         }
     }
     void addEmergency(int patientId){
-
     emergencyQueue.push(patientId);
 
      };
@@ -170,7 +256,7 @@ int handleEmergency(){
        if(foundPat){
       cout << "Booking confirmed." << endl;
   }   else {
-      cout  << "Booking cancelled , Wrong doctor ID." << endl;
+      cout  << "Booking cancelled , Wrong patient ID." << endl;
   }
 
 
@@ -199,11 +285,22 @@ int handleEmergency(){
         }
 
     };
+
 };
 
 // ========== MAIN PROGRAM ========== //
 int main()
 {
+
+    /// Testing Patient Class
+    Patient p1(1, "John Doe", 30, "555-1234");
+    cout << "Patient created: " << p1.getName() << endl;
+    p1.admitPatient(PRIVATE_ROOM); // if you want to see the patient is not admitted comment this line and run again
+    p1.dischargePatient();
+    p1.displayHistory();
+    cout << "Patient name is: " << p1.getName() << endl;
+    // end of my testing part
+
     Hospital hospital;
 
     // Test Case 1: Registering patients
