@@ -136,7 +136,15 @@ public:
     {
 
         return isAdmitted;
-    };
+    }
+    int getAge() 
+    {
+        return age; 
+    }
+    string getContact() 
+    {
+        return contact; 
+    }
 };
 
 // ========== DOCTOR CLASS ========== //
@@ -157,6 +165,14 @@ public:
     int getId();
     string getName();
     string getDepartment();
+    int getAge() 
+    { 
+        return age; 
+    }
+    string getContact() 
+    { 
+        return contact; 
+    }
 };
 
 // ========== HOSPITAL CLASS ========== //
@@ -168,6 +184,8 @@ private:
     queue<int> emergencyQueue;
     int patientCounter;
     int doctorCounter;
+    int getAge();
+    string getContact();
 
 public:
     Hospital()
@@ -287,17 +305,27 @@ public:
             {
                 cout << "Patient ID      : " << p.getId() << endl;
                 cout << "Patient Name    : " << p.getName() << endl;
-               
+                cout << "Patient Age     : " << p.getAge() << endl;
+                cout << "Patient Contact : " << p.getContact() << endl;
 
                 if (p.getAdmissionStatus())
                     cout << "Admission Status: Admitted" << endl;
                 else
                     cout << "Admission Status: Not Admitted" << endl;
 
+                cout << "\n--- Patient History ---\n";
+                p.displayHistory();
+
                 found = true;
                 break;
             }
         }
+
+        if (!found)
+        {
+            cout << "Patient with ID " << patientId << " not found." << endl;
+        }
+    }
 
         if (!found)
         {
@@ -345,13 +373,14 @@ int main()
     int p1 = hospital.registerPatient("John Doe", 35, "555-1234");
     int p2 = hospital.registerPatient("Jane Smith", 28, "555-5678");
     int p3 = hospital.registerPatient("Mike Johnson", 45, "555-9012");
-
+    cout << "Registered patients with IDs: " << p1 << ", " << p2 << ", " << p3 << endl;
     // Test Case 2: Adding doctors
+    
     int d1 = hospital.addDoctor("Dr. Smith", CARDIOLOGY);
     int d2 = hospital.addDoctor("Dr. Brown", NEUROLOGY);
     int d3 = hospital.addDoctor("Dr. Lee", PEDIATRICS);
-
-    // Test Case 3: Admitting patients
+    cout << "Registered doctors with IDs: " << d1 << ", " << d2 << ", " << d3 << endl;
+    /// Test Case 3: Admitting patients
     hospital.admitPatient(p1, PRIVATE_ROOM);
     hospital.admitPatient(p2, ICU);
     // Try admitting already admitted patient
