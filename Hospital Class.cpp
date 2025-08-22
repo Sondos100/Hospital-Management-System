@@ -327,11 +327,7 @@ public:
         }
     }
 
-        if (!found)
-        {
-            cout << "Patient with ID " << patientId << " not found." << endl;
-        }
-    }
+   
 
     void displayDoctorInfo(int doctorId)
     {
