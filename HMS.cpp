@@ -73,9 +73,30 @@ public:
         }
     }
 
-    void addMedicalRecord(string record);
-    void requestTest(string testName);
-    string performTest();
+    void addMedicalRecord(string record)
+    {
+        medicalHistory.push(record);
+    }
+
+    void requestTest(string testName)
+    {
+        testQueue.push(testName);
+        medicalHistory.push("Requested test: " + testName);
+    }
+
+    string performTest()
+    {
+        if (testQueue.empty())
+        {
+            return "No tests are pending";
+        }
+
+        string testName = testQueue.front();
+        testQueue.pop();
+        medicalHistory.push("Performed test: " + testName);
+
+        return testName;
+    }
 
     void displayHistory()
     {
@@ -102,14 +123,20 @@ public:
         }
     }
 
-    int getId();
+    int getId()
+    {
+        return id;
+    }
 
     string getName()
     {
         return name;
     }
 
-    bool getAdmissionStatus();
+    bool getAdmissionStatus()
+    {
+        return isAdmitted;
+    }
 };
 
 // ========== DOCTOR CLASS ========== //
@@ -122,14 +149,60 @@ private:
     queue<int> appointmentQueue;
 
 public:
-    Doctor(int did, string n, Department d);
+    Doctor(int did, string n, Department d)
+    {
+        id = did;
+        name = n;
+        department = d;
+    }
 
-    void addAppointment(int patientId);
-    int seePatient();
+    void addAppointment(int patientId)
+    {
+        appointmentQueue.push(patientId);
+    }
 
-    int getId();
-    string getName();
-    string getDepartment();
+    int seePatient()
+    {
+        if (appointmentQueue.empty())
+        {
+            return -1;
+        }
+
+        int nextPatient = appointmentQueue.front();
+        appointmentQueue.pop();
+        return nextPatient;
+    }
+
+    int getId()
+    {
+        return id;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+
+    string getDepartment()
+    {
+        switch (department)
+        {
+        case CARDIOLOGY:
+            return "Cardiology";
+        case NEUROLOGY:
+            return "Neurology";
+        case ORTHOPEDICS:
+            return "Orthopedics";
+        case PEDIATRICS:
+            return "Pediatrics";
+        case EMERGENCY:
+            return "Emergency";
+        case GENERAL:
+            return "General";
+        default:
+            return "Unknown";
+        }
+    }
 };
 
 // ========== HOSPITAL CLASS ========== //
@@ -276,6 +349,15 @@ public:
 // ========== MAIN PROGRAM ========== //
 int main()
 {
+    /// Testing Patient Class (MMK)
+    Patient pMK(1, "John Doe", 30, "555-1234");
+    cout << "Patient created: " << pMK.getName() << endl;
+    pMK.admitPatient(PRIVATE_ROOM); // if you want to see the patient is not admitted comment this line and run again
+    pMK.dischargePatient();
+    pMK.displayHistory();
+    cout << "Patient name is: " << pMK.getName() << endl;
+    // end of my testing part
+
     Hospital hospital;
 
     // Test Case 1: Registering patients
