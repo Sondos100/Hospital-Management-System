@@ -413,6 +413,14 @@ int main()
     cout << "Patient name is: " << pMK.getName() << endl;
     // end of my testing part
 
+    /// Testing Doctor Class (Ahmed)
+    Doctor D1 (2 , "Matthew Walker ",CARDIOLOGY );
+    cout << "Doctor Department :" << D1.getDepartment() << endl;
+     D1.addAppointment(1); // if you want to see next patient is -1 comment this line
+    cout << "Next patient :" << D1.seePatient() << endl;
+    // end of my testing part
+
+
     Hospital hospital;
 
     // Test Case 1: Registering patients
