@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <fstream>
 using namespace std;
 
 // ========== ENUMERATIONS ========== //
@@ -229,6 +230,87 @@ public:
     {
         patientCounter = 0;
         doctorCounter = 0;
+        loadPatients();
+        loadDoctors();
+    }
+    // Save patients to file
+    void savePatients()
+    {
+        ofstream file("patients.txt");
+        for (auto &p : patients)
+        {
+            file << p.getId() << ","
+                 << p.getName() << ","
+                 << p.getAge() << ","
+                 << p.getContact() << ","
+                 << p.getAdmissionStatus() << "\n";
+        }
+        file.close();
+    }
+
+    void saveDoctors()
+    {
+        ofstream file("doctors.txt");
+        for (auto &d : doctors)
+        {
+            file << d.getId() << ","
+                 << d.getName() << ","
+                 << d.getDepartment() << "\n";
+        }
+        file.close();
+    }
+
+    void loadPatients()
+    {
+        ifstream file("patients.txt");
+        string name, contact;
+        int id, age, admitted;
+        while (file >> id)
+        {
+            file.ignore();
+            getline(file, name, ',');
+            file >> age;
+            file.ignore();
+            getline(file, contact, ',');
+            file >> admitted;
+
+            Patient p(id, name, age, contact);
+            if (admitted)
+                p.admitPatient(GENERAL_WARD);
+            patients.push_back(p);
+            patientCounter = id;
+        }
+        file.close();
+    }
+
+    void loadDoctors()
+    {
+        ifstream file("doctors.txt");
+        string name, dept;
+        int id;
+        while (file >> id)
+        {
+            file.ignore();
+            getline(file, name, ',');
+            getline(file, dept);
+
+            Department d = GENERAL;
+            if (dept == "Cardiology")
+                d = CARDIOLOGY;
+            else if (dept == "Neurology")
+                d = NEUROLOGY;
+            else if (dept == "Orthopedics")
+                d = ORTHOPEDICS;
+            else if (dept == "Pediatrics")
+                d = PEDIATRICS;
+            else if (dept == "Emergency")
+                d = EMERGENCY;
+
+            Doctor doc(id, name, d);
+            doctors.push_back(doc);
+            doctorCounter = id;
+        }
+        file.close();
     }
 
     int registerPatient(string name, int age, string contact)
@@ -236,6 +318,7 @@ public:
         patientCounter++;
         Patient newPatient(patientCounter, name, age, contact);
         patients.push_back(newPatient);
+        savePatients();
         return patientCounter;
     }
 
@@ -244,6 +327,7 @@ public:
         doctorCounter++;
         Doctor newDoctor(doctorCounter, name, dept);
         doctors.push_back(newDoctor);
+        saveDoctors();
         return doctorCounter;
     }
 
@@ -277,7 +361,7 @@ public:
 
     void addEmergency(int patientId)
     {
-        for(Patient &p : patients )
+        for (Patient &p : patients)
         {
             if (patientId == p.getId())
             {
@@ -285,12 +369,9 @@ public:
                 p.addMedicalRecord(" Patient " + to_string(patientId) + " has added into Emergency case .");
                 return;
             }
-
         }
         cout << " The patientID not found please register first ." << endl;
         // i did not call registerPatient because it needs name and age and contact so we need to make patient enter three attributes.
-
-
     }
 
     int handleEmergency()
@@ -414,12 +495,11 @@ int main()
     // end of my testing part
 
     /// Testing Doctor Class (Ahmed)
-    Doctor D1 (2 , "Matthew Walker ",CARDIOLOGY );
+    Doctor D1(2, "Matthew Walker ", CARDIOLOGY);
     cout << "Doctor Department :" << D1.getDepartment() << endl;
-     D1.addAppointment(1); // if you want to see next patient is -1 comment this line
+    D1.addAppointment(1); // if you want to see next patient is -1 comment this line
     cout << "Next patient :" << D1.seePatient() << endl;
     // end of my testing part
-
 
     Hospital hospital;
 
