@@ -233,7 +233,7 @@ public:
         loadPatients();
         loadDoctors();
     }
-    // Save patients to file
+
     void savePatients()
     {
         ofstream file("patients.txt");
