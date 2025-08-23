@@ -277,7 +277,20 @@ public:
 
     void addEmergency(int patientId)
     {
-        emergencyQueue.push(patientId);
+        for(Patient &p : patients )
+        {
+            if (patientId == p.getId())
+            {
+                emergencyQueue.push(patientId);
+                p.addMedicalRecord(" Patient " + to_string(patientId) + " has added into Emergency case .");
+                return;
+            }
+
+        }
+        cout << " The patientID not found please register first ." << endl;
+        // i did not call registerPatient because it needs name and age and contact so we need to make patient enter three attributes.
+
+
     }
 
     int handleEmergency()
