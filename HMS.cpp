@@ -406,11 +406,13 @@ int main()
     int p1 = hospital.registerPatient("John Doe", 35, "555-1234");
     int p2 = hospital.registerPatient("Jane Smith", 28, "555-5678");
     int p3 = hospital.registerPatient("Mike Johnson", 45, "555-9012");
+    cout << "Registered patients with IDs: " << p1 << ", " << p2 << ", " << p3 << endl; // ziadhate
 
     // Test Case 2: Adding doctors
     int d1 = hospital.addDoctor("Dr. Smith", CARDIOLOGY);
     int d2 = hospital.addDoctor("Dr. Brown", NEUROLOGY);
     int d3 = hospital.addDoctor("Dr. Lee", PEDIATRICS);
+    cout << "Registered doctors with IDs: " << d1 << ", " << d2 << ", " << d3 << endl; // ziadhate
 
     // Test Case 3: Admitting patients
     hospital.admitPatient(p1, PRIVATE_ROOM);
