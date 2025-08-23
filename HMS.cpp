@@ -63,8 +63,7 @@ public:
         if (isAdmitted)
         {
             isAdmitted = false;
-            medicalHistory.push("Discharged from hospital"); // can add "on " + current date
-            // may use addMedicalRecord method instead
+            addMedicalRecord("Discharged from hospital"); // can add "on " + current date
             cout << "Patient is discharged successfully !" << endl;
         }
         else
