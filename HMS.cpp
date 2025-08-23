@@ -133,6 +133,16 @@ public:
         return name;
     }
 
+    int getAge()
+    {
+        return age;
+    }
+
+    string getContact()
+    {
+        return contact;
+    }
+
     bool getAdmissionStatus()
     {
         return isAdmitted;
@@ -248,13 +258,13 @@ public:
                 found = true;
                 if (patient.getAdmissionStatus())
                 {
-                    cout << "patient" << patient.getName();
-                    cout << "Patient is already admitted !" << endl;
+                    cout << "Patient : " << patient.getName();
+                    cout << "Patient is already admitted !" << endl; // Admission Status : Already Admitted
                 }
                 else
                 {
                     patient.admitPatient(type);
-                    cout << "patient :" << patient.getName();
+                    cout << "Patient : " << patient.getName();
                     cout << "Patient is admitted successfully to room type " << type << endl;
                 }
                 break;
@@ -307,23 +317,55 @@ public:
                     foundPat = true;
                 }
             }
+
             if (foundPat)
             {
-                cout << "Booking confirmed." << endl;
+                cout << "Appointment booked successfully." << endl;
             }
+
             else
             {
-                cout << "Booking cancelled , Wrong doctor ID." << endl;
+                cout << "Patient ID not found, cancelling process !" << endl;
             }
         }
 
         else
         {
-            cout << "Booking cancelled , Wrong doctor ID." << endl;
+            cout << "Doctor ID not found, cancelling process !" << endl;
         }
     }
 
-    void displayPatientInfo(int patientId);
+    void displayPatientInfo(int patientId)
+    {
+        bool found = false;
+
+        for (Patient &p : patients)
+        {
+            if (p.getId() == patientId)
+            {
+                cout << "Patient ID      : " << p.getId() << endl;
+                cout << "Patient Name    : " << p.getName() << endl;
+                cout << "Patient Age     : " << p.getAge() << endl;
+                cout << "Patient Contact : " << p.getContact() << endl;
+
+                if (p.getAdmissionStatus())
+                    cout << "Admission Status: Admitted" << endl;
+                else
+                    cout << "Admission Status: Not Admitted" << endl;
+
+                cout << "\n--- Patient History ---\n"; // already done in displayHistory method
+                p.displayHistory();
+
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            cout << "Patient with ID " << patientId << " not found." << endl;
+        }
+    }
 
     void displayDoctorInfo(int doctorId)
     {
@@ -335,13 +377,14 @@ public:
                 cout << "Doctor ID : " << d.getId() << endl;
                 cout << "Doctor Name :" << d.getName() << endl;
                 cout << "Doctor Department : " << d.getDepartment() << endl;
-                // be careful getdepartment method it returns string and department is enum.
                 foundDoc = true;
+                // Could Display appointments
+                break;
             }
         }
         if (!foundDoc)
         {
-            cout << "Wrong doctor ID.";
+            cout << "Doctor ID not found !" << endl;
         }
     }
 };
