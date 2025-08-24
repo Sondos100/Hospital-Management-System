@@ -4,6 +4,7 @@
 #include <stack>
 #include <queue>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 // ========== ENUMERATIONS ========== //
@@ -236,21 +237,24 @@ public:
 
     void savePatients()
     {
-        ofstream file("patients.txt");
+        ofstream file("patients.csv");
+        file << "ID,Name,Age,Contact,AdmissionStatus\n"; // header row
         for (auto &p : patients)
         {
             file << p.getId() << ","
                  << p.getName() << ","
                  << p.getAge() << ","
                  << p.getContact() << ","
-                 << p.getAdmissionStatus() << "\n";
+                 << (p.getAdmissionStatus() ? "Admitted" : "Not Admitted")
+                 << "\n";
         }
         file.close();
     }
 
     void saveDoctors()
     {
-        ofstream file("doctors.txt");
+        ofstream file("doctors.csv");
+        file << "ID,Name,Department\n"; // header row
         for (auto &d : doctors)
         {
             file << d.getId() << ","
@@ -262,21 +266,28 @@ public:
 
     void loadPatients()
     {
-        ifstream file("patients.txt");
-        string name, contact;
-        int id, age, admitted;
-        while (file >> id)
+        ifstream file("patients.csv");
+        string line;
+        getline(file, line);
+
+        while (getline(file, line))
         {
-            file.ignore();
-            getline(file, name, ',');
-            file >> age;
-            file.ignore();
-            getline(file, contact, ',');
-            file >> admitted;
+            stringstream ss(line);
+            string idStr, name, ageStr, contact, admittedStr;
+            getline(ss, idStr, ',');
+            getline(ss, name, ',');
+            getline(ss, ageStr, ',');
+            getline(ss, contact, ',');
+            getline(ss, admittedStr);
+
+            int id = stoi(idStr);
+            int age = stoi(ageStr);
+            bool admitted = (admittedStr == "Admitted");
 
             Patient p(id, name, age, contact);
             if (admitted)
                 p.admitPatient(GENERAL_WARD);
+
             patients.push_back(p);
             patientCounter = id;
         }
@@ -285,25 +296,30 @@ public:
 
     void loadDoctors()
     {
-        ifstream file("doctors.txt");
-        string name, dept;
-        int id;
-        while (file >> id)
+        ifstream file("doctors.csv");
+        string line;
+        getline(file, line);
+
+        while (getline(file, line))
         {
-            file.ignore();
-            getline(file, name, ',');
-            getline(file, dept);
+            stringstream ss(line);
+            string idStr, name, deptStr;
+            getline(ss, idStr, ',');
+            getline(ss, name, ',');
+            getline(ss, deptStr);
+
+            int id = stoi(idStr);
 
             Department d = GENERAL;
-            if (dept == "Cardiology")
+            if (deptStr == "Cardiology")
                 d = CARDIOLOGY;
-            else if (dept == "Neurology")
+            else if (deptStr == "Neurology")
                 d = NEUROLOGY;
-            else if (dept == "Orthopedics")
+            else if (deptStr == "Orthopedics")
                 d = ORTHOPEDICS;
-            else if (dept == "Pediatrics")
+            else if (deptStr == "Pediatrics")
                 d = PEDIATRICS;
-            else if (dept == "Emergency")
+            else if (deptStr == "Emergency")
                 d = EMERGENCY;
 
             Doctor doc(id, name, d);
