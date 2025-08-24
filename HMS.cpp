@@ -238,7 +238,7 @@ public:
     void savePatients()
     {
         ofstream file("patients.csv");
-        file << "ID,Name,Age,Contact,AdmissionStatus\n"; // header row
+        file << "ID,Name,Age,Contact,AdmissionStatus\n";
         for (auto &p : patients)
         {
             file << p.getId() << ","
@@ -254,7 +254,7 @@ public:
     void saveDoctors()
     {
         ofstream file("doctors.csv");
-        file << "ID,Name,Department\n"; // header row
+        file << "ID,Name,Department\n";
         for (auto &d : doctors)
         {
             file << d.getId() << ","
