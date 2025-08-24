@@ -159,6 +159,46 @@ private:
     queue<int> appointmentQueue;
 
 public:
+<<<<<<< HEAD
+    Doctor(int did, string n, Department d);{
+        id= did;
+        name= n;
+        department= d;
+    }
+
+    void addAppointment(int patientId);{
+        appointmentQueue.push(patientId);
+        cout<<"Patient "<<patientId<<"booked with Dr."<<name<<endl;
+    }
+    int seePatient();{
+        if (appointmentQueue.empty()) {
+            cout << "No patients waiting for Dr. " << name << endl;
+            return -1; 
+        }
+        int nextPatient = appointmentQueue.front();
+        appointmentQueue.pop();
+        cout <<"Dr. "<< name <<" is now seeing Patient "<< nextPatient<<endl;
+        return nextPatient;
+
+    }
+
+    int getId();{
+        return id;
+    }
+    string getName();{
+        return name;
+    }
+    string getDepartment();{
+        switch (department){
+            case CARDIOLOGY:return"Cardiology";
+            case NEUROLOGY:return "Neurology";
+            case ORTHOPEDICS:return "Orthopedics";
+            case PEDIATRICS:return"Pediatrics";
+            case EMERGENCY:return "Emergency";
+            case GENERAL:return "General";
+            default:return"Unknown";
+
+=======
     Doctor(int did, string n, Department d)
     {
         id = did;
@@ -211,6 +251,7 @@ public:
             return "General";
         default:
             return "Unknown";
+>>>>>>> 8a3adc781ff6ed9f076f9211aa5631b88971ac68
         }
     }
 };
