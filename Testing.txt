@@ -1,0 +1,143 @@
+                                     ============== Hospital Management System Testing =============
+
+/// Testing Patient Class (Eng.Mohamed Moustafa)
+
+    Patient pMK(1, "John Doe", 30, "555-1234");
+    cout << "Patient created: " << pMK.getName() << endl;
+    pMK.admitPatient(PRIVATE_ROOM); // if you want to see the patient is not admitted comment this line and run again
+    pMK.dischargePatient();
+    pMK.displayHistory();
+    cout << "Patient name is: " << pMK.getName() << endl;
+
+----------------------------------------------------------------------------------------------------------------------
+
+/// Testing Doctor Class (Eng.Ahmed Mahmoud)
+
+    Doctor D1(2, "Matthew Walker", CARDIOLOGY);
+    cout << "Doctor Department : " << D1.getDepartment() << endl;
+    D1.addAppointment(1); // if you want to see next patient is -1 comment this line
+    cout << "Next patient : " << D1.seePatient() << endl;
+
+----------------------------------------------------------------------------------------------------------------------
+
+/// Performance Test - Stress Test - (Eng.Farah Yahia)
+
+void performanceTest()
+{
+    Hospital hospital;
+
+    for (int i = 0; i < 1000; i++)
+    {
+        hospital.registerPatient("Patient_" + to_string(i), 30, "01" + to_string(100000000 + i));
+    }
+    cout << "Registered 1000 patients\n";
+
+    for (int i = 0; i < 1000; i++)
+    {
+        hospital.addDoctor("Doctor_" + to_string(i), static_cast<Department>(i % 6));
+    }
+    cout << "Registered 1000 doctors\n";
+
+    for (int i = 1; i <= 500; i++)
+    {
+        hospital.admitPatient(i, (i % 2 == 0) ? ICU : GENERAL_WARD);
+    }
+    cout << "Admitted 500 patients\n";
+
+    for (int i = 1; i <= 5000; i++)
+    {
+        int docId = (i % 1000) + 1;
+        int patId = (i % 1000) + 1;
+        hospital.bookAppointment(docId, patId);
+    }
+    cout << "Booked 5000 appointments\n";
+
+    for (int i = 1; i <= 200; i++)
+    {
+        hospital.addEmergency(i);
+    }
+    while (hospital.handleEmergency() != -1)
+        ;
+    cout << " Processed 200 emergency cases\n";
+}
+
+----------------------------------------------------------------------------------------------------------------------
+
+/// Testing Hospital Class (Eng.Ziad Hatem)
+
+    Hospital hospital;
+    // Test Case 1: Registering patients
+    int p1 = hospital.registerPatient("John Doe", 35, "555-1234");
+    int p2 = hospital.registerPatient("Jane Smith", 28, "555-5678");
+    int p3 = hospital.registerPatient("Mike Johnson", 45, "555-9012");
+    cout << "Registered patients with IDs: " << p1 << ", " << p2 << ", " << p3 << endl; // ziadhate
+
+    // Test Case 2: Adding doctors
+    int d1 = hospital.addDoctor("Dr. Smith", CARDIOLOGY);
+    int d2 = hospital.addDoctor("Dr. Brown", NEUROLOGY);
+    int d3 = hospital.addDoctor("Dr. Lee", PEDIATRICS);
+    cout << "Registered doctors with IDs: " << d1 << ", " << d2 << ", " << d3 << endl; // ziadhate
+
+----------------------------------------------------------------------------------------------------------------------
+
+/// Testing System Code (FuzeTek)
+
+    Hospital hospital;
+
+    // Test Case 1: Registering patients
+    int p1 = hospital.registerPatient("John Doe", 35, "555-1234");
+    int p2 = hospital.registerPatient("Jane Smith", 28, "555-5678");
+    int p3 = hospital.registerPatient("Mike Johnson", 45, "555-9012");
+
+    // Test Case 2: Adding doctors
+    int d1 = hospital.addDoctor("Dr. Smith", CARDIOLOGY);
+    int d2 = hospital.addDoctor("Dr. Brown", NEUROLOGY);
+    int d3 = hospital.addDoctor("Dr. Lee", PEDIATRICS);
+
+    // Test Case 3: Admitting patients
+    hospital.admitPatient(p1, PRIVATE_ROOM);
+    hospital.admitPatient(p2, ICU);
+    // Try admitting already admitted patient
+    hospital.admitPatient(p1, SEMI_PRIVATE);
+
+    // Test Case 4: Booking appointments
+    hospital.bookAppointment(d1, p1);
+    hospital.bookAppointment(d1, p2);
+    hospital.bookAppointment(d2, p3);
+    // Try booking with invalid doctor/patient
+    hospital.bookAppointment(999, p1); // Invalid doctor
+    hospital.bookAppointment(d1, 999); // Invalid patient
+
+    // Test Case 5: Handling medical tests
+    // These would normally be called on Patient objects
+    // In a real implementation, we'd need a way to access patients
+
+    // Test Case 6: Emergency cases
+    hospital.addEmergency(p3);
+    hospital.addEmergency(p1);
+    int emergencyPatient = hospital.handleEmergency();
+    emergencyPatient = hospital.handleEmergency();
+    emergencyPatient = hospital.handleEmergency(); // No more emergencies
+
+    // Test Case 7: Discharging patients
+    // Would normally call dischargePatient() on Patient objects
+
+    // Test Case 8: Displaying information
+    hospital.displayPatientInfo(p1);
+    hospital.displayPatientInfo(p2);
+    hospital.displayPatientInfo(999); // Invalid patient
+
+    hospital.displayDoctorInfo(d1);
+    hospital.displayDoctorInfo(d2);
+    hospital.displayDoctorInfo(999); // Invalid doctor
+
+    // Test Case 9: Doctor seeing patients
+    // These would normally be called on Doctor objects
+    // In a real implementation, we'd need a way to access doctors
+
+    // Test Case 10: Edge cases
+    Hospital emptyHospital;
+    emptyHospital.displayPatientInfo(1); // No patients
+    emptyHospital.displayDoctorInfo(1);  // No doctors
+    emptyHospital.handleEmergency();     // No emergencies
+
