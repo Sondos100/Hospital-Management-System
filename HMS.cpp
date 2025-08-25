@@ -194,6 +194,15 @@ public:
         appointmentCount = 0;
     }
 
+    // New constructor for loading from file
+    Doctor(int did, string n, Department d, int aCount)
+    {
+        id = did;
+        name = n;
+        department = d;
+        appointmentCount = aCount; // to preserve the previous values
+    }
+
     void addAppointment(int patientId)
     {
         appointmentQueue.push(patientId);
@@ -415,7 +424,8 @@ public:
             else if (deptStr == "Emergency")
                 dept = EMERGENCY;
 
-            Doctor doc(id, name, dept);
+            // Doctor doc(id, name, dept);      XXX when adding a new doc. all appointments are set to 0.
+            Doctor doc(id, name, dept, count);
 
             doctors.push_back(doc);
             if (id > doctorCounter)
